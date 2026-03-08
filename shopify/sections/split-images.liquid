@@ -1,0 +1,141 @@
+<style>
+  .split-images-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    min-height: 500px;
+  }
+
+  .split-image-container {
+    position: relative;
+    width: 100%;
+    min-height: 600;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .split-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .split-image-cta {
+    position: absolute;
+    bottom: 21%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+
+  .split-image-cta a {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+
+  .split-image-cta a:hover {
+    background-color: rgba(0, 0, 0, 1);
+  }
+
+  @media (max-width: 768px) {
+    .split-images-wrapper {
+      grid-template-columns: 1fr;
+      {% comment %} min-height: 400px; {% endcomment %}
+    }
+
+    .split-image-container {
+      {% comment %} min-height: 400px; {% endcomment %}
+    }
+  }
+</style>
+
+<div class="split-images-wrapper">
+  {% if section.settings.mens_image %}
+    <div class="split-image-container">
+      <img
+        src="{{ section.settings.mens_image | image_url: width: 800 }}"
+        alt="{{ section.settings.mens_label }}"
+        loading="lazy"
+      />
+      {% if section.settings.mens_url %}
+        <div class="split-image-cta">
+          <a href="{{ section.settings.mens_url }}">{{ section.settings.mens_label }}</a>
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if section.settings.womens_image %}
+    <div class="split-image-container">
+      <img
+        src="{{ section.settings.womens_image | image_url: width: 800 }}"
+        alt="{{ section.settings.womens_label }}"
+        loading="lazy"
+      />
+      {% if section.settings.womens_url %}
+        <div class="split-image-cta">
+          <a href="{{ section.settings.womens_url }}">{{ section.settings.womens_label }}</a>
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+  {
+    "name": "Split Images",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "mens_image",
+        "label": "Men's Image"
+      },
+      {
+        "type": "text",
+        "id": "mens_label",
+        "label": "Men's Button Label",
+        "default": "Men's"
+      },
+      {
+        "type": "url",
+        "id": "mens_url",
+        "label": "Men's Collection Link"
+      },
+      {
+        "type": "image_picker",
+        "id": "womens_image",
+        "label": "Women's Image"
+      },
+      {
+        "type": "text",
+        "id": "womens_label",
+        "label": "Women's Button Label",
+        "default": "Women's"
+      },
+      {
+        "type": "url",
+        "id": "womens_url",
+        "label": "Women's Collection Link"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Split Images"
+      }
+    ]
+  }
+{% endschema %}

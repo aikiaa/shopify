@@ -1,0 +1,23 @@
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="{{ routes.root_url }}">Home</a>
+
+  {% assign current_collection = collection %}
+  {% if current_collection == blank and product %}
+    {% assign current_collection = product.collections.first %}
+  {% endif %}
+
+  {% if current_collection %}
+    <span class="sep">›</span>
+    <a href="{{ current_collection.url }}">
+      {{ current_collection.title }}
+    </a>
+  {% endif %}
+
+  {% if product %}
+    <span class="sep">›</span>
+    <span>{{ product.title }}</span>
+  {% elsif page %}
+    <span class="sep">›</span>
+    <span>{{ page.title }}</span>
+  {% endif %}
+</nav>

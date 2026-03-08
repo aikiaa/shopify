@@ -1,0 +1,159 @@
+<div class="hero-banner-wrapper">
+  <div class="hero-carousel">
+
+    {% if section.settings.hero_image_1 != blank %}
+      <div class="hero-slide">
+        <img
+  src="{{ section.settings.hero_image_1 | image_url: width: 2000 }}"
+  alt="{{ section.settings.hero_image_1.alt | escape }}"
+  width="{{ section.settings.hero_image_1.width }}"
+  height="{{ section.settings.hero_image_1.height }}"
+  class="hero-image"
+  loading="eager"
+>
+
+      </div>
+    {% endif %}
+
+{% if section.settings.hero_image_2 != blank %}
+  <div class="hero-slide img-carousel">
+    <a
+      href="https://app.gohighlevel.com/v2/preview/aobwfv3COvrSxhdRYq2s"
+      class="hero-link"
+    >
+      <img
+        src="{{ section.settings.hero_image_2 | image_url: width: 2000 }}"
+        alt="{{ section.settings.hero_image_2.alt | escape }}"
+        width="{{ section.settings.hero_image_2.width }}"
+        height="{{ section.settings.hero_image_2.height }}"
+        class="hero-image"
+        loading="eager"
+      >
+    </a>
+  </div>
+{% endif %}
+
+
+    {% if section.settings.hero_image_3 != blank %}
+      <div class="hero-slide">
+         <a
+      href="https://app.gohighlevel.com/v2/preview/aobwfv3COvrSxhdRYq2s"
+      class="hero-link"
+    >
+       <img
+  src="{{ section.settings.hero_image_3 | image_url: width: 2000 }}"
+  alt="{{ section.settings.hero_image_3.alt | escape }}"
+  width="{{ section.settings.hero_image_3.width }}"
+  height="{{ section.settings.hero_image_3.height }}"
+  class="hero-image"
+  loading="eager"
+>
+</a>
+      </div>
+    {% endif %}
+
+    {% if section.settings.hero_image_4 != blank %}
+      <div class="hero-slide">
+         <a
+      href="https://app.gohighlevel.com/v2/preview/aobwfv3COvrSxhdRYq2s"
+      class="hero-link"
+    >
+       <img
+  src="{{ section.settings.hero_image_4 | image_url: width: 2000 }}"
+  alt="{{ section.settings.hero_image_4.alt | escape }}"
+  width="{{ section.settings.hero_image_4.width }}"
+  height="{{ section.settings.hero_image_4.height }}"
+  class="hero-image"
+  loading="eager"
+>
+</a>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+
+<style>
+.hero-banner-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-carousel {
+  display: flex;
+  width: 100%;
+  transition: transform 0.6s ease-in-out;
+}
+
+.hero-slide {
+  min-width: 100%;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  max-height: 600px;
+  object-fit: cover;
+  display: block;
+}
+.img-carousel{
+cursor: pointer;
+}
+/* Mobile */
+@media (max-width: 768px) {
+  .hero-image {
+    max-height: 75vh;
+  }
+}
+
+</style>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const carousel = document.querySelector('.hero-carousel');
+    const slides = document.querySelectorAll('.hero-slide');
+    if (!carousel || slides.length <= 1) return;
+
+    let index = 0;
+    const slideCount = slides.length;
+
+    setInterval(() => {
+      index = (index + 1) % slideCount;
+      carousel.style.transform = `translateX(-${index * 100}%)`;
+    }, 3000);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Hero Banner – Carousel",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image_1",
+      "label": "Hero Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image_2",
+      "label": "Hero Image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image_3",
+      "label": "Hero Image 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image_4",
+      "label": "Hero Image 4"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner – Carousel"
+    }
+  ]
+}
+{% endschema %}

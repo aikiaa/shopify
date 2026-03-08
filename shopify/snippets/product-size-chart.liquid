@@ -1,0 +1,93 @@
+{% assign tags = product.tags | join: ',' | downcase %}
+
+{% assign is_male = false %}
+{% assign is_female = false %}
+{% assign is_footwear = false %}
+
+{% if tags contains 'male' %}
+  {% assign is_male = true %}
+{% endif %}
+
+{% if tags contains 'female' %}
+  {% assign is_female = true %}
+{% endif %}
+
+{% if tags contains 'footwear' %}
+  {% assign is_footwear = true %}
+{% endif %}
+
+<div class="size-chart-wrapper">
+
+  <!-- Button (unchanged) -->
+  <button
+    class="size-chart-btn"
+    type="button"
+    onclick="this.nextElementSibling.classList.add('active');">
+    <span>Size Chart</span>
+  </button>
+
+  <!-- Modal -->
+  <div
+    class="size-chart-modal"
+    onclick="if(event.target === this) this.classList.remove('active');">
+
+    <div class="size-chart-modal-content">
+      <button
+        class="size-chart-close"
+        type="button"
+        onclick="this.closest('.size-chart-modal').classList.remove('active');">
+        &times;
+      </button>
+
+      <h2>Size Chart</h2>
+
+      <table class="size-chart-table">
+        <thead>
+          <tr>
+            <th>Size</th>
+            <th>Chest (in)</th>
+            <th>Waist (in)</th>
+            <th>Length (in)</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% if is_footwear and is_female %}
+            <tr><td colspan="4"><strong>Girls Footwear</strong></td></tr>
+            {% for size in (5..11) %}
+              <tr>
+                <td><strong>{{ size }}</strong></td>
+                <td colspan="3">Standard Fit</td>
+              </tr>
+            {% endfor %}
+
+          {% elsif is_footwear and is_male %}
+            <tr><td colspan="4"><strong>Boys Footwear</strong></td></tr>
+            {% for size in (6..12) %}
+              <tr>
+                <td><strong>{{ size }}</strong></td>
+                <td colspan="3">Standard Fit</td>
+              </tr>
+            {% endfor %}
+
+          {% elsif is_female %}
+            <tr><td><strong>XS</strong></td><td>32–33</td><td>24–25</td><td>26</td></tr>
+            <tr><td><strong>S</strong></td><td>34–35</td><td>26–27</td><td>26.5</td></tr>
+            <tr><td><strong>M</strong></td><td>36–37</td><td>28–29</td><td>27</td></tr>
+            <tr><td><strong>L</strong></td><td>38–39</td><td>30–31</td><td>27.5</td></tr>
+            <tr><td><strong>XL</strong></td><td>40–41</td><td>32–33</td><td>28</td></tr>
+
+          {% else %}
+            <!-- default → male apparel -->
+            <tr><td><strong>S</strong></td><td>36–38</td><td>28–30</td><td>27</td></tr>
+            <tr><td><strong>M</strong></td><td>39–40</td><td>31–32</td><td>28</td></tr>
+            <tr><td><strong>L</strong></td><td>41–42</td><td>33–34</td><td>29</td></tr>
+            <tr><td><strong>XL</strong></td><td>43–44</td><td>35–36</td><td>30</td></tr>
+            <tr><td><strong>XXL</strong></td><td>45–46</td><td>37–38</td><td>31</td></tr>
+          {% endif %}
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+</div>

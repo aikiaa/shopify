@@ -1,0 +1,19 @@
+<script>
+window.checkoutLabelCustomizer = function() {
+  var elems = document.querySelectorAll('*');
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    if (el.textContent && el.children.length === 0) {
+      var text = el.textContent.trim();
+      if (text === 'Billing address') { el.textContent = 'Shipping Address'; }
+      if (text === 'Discount code') { el.textContent = 'Coupon code'; }
+    }
+  }
+};
+window.checkoutLabelCustomizer();
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', window.checkoutLabelCustomizer);
+}
+var observer = new MutationObserver(window.checkoutLabelCustomizer);
+observer.observe(document.body, {childList: true, subtree: true});
+</script>

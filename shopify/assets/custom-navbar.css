@@ -1,0 +1,26 @@
+/* Remove underlines from all navigation links */
+header a {
+  text-decoration: none !important;
+}
+
+/* Reduce navbar font size by 2px (from 16px to 14px) */
+header nav a,
+header nav button {
+  font-size: 14px !important;
+}
+
+/* Hide the secondary menu row (Shop All New, Women's, Men's, Shoes, etc) */
+header + * {
+  display: none !important;
+}
+
+/* Alternative selector - hide any nav list that comes after the main nav */
+.header__menu + ul {
+  display: none !important;
+}
+
+/* Hide elements with 'Shop All New' or similar secondary menus */
+ul li a[href*="shop"],
+ul li a[href*="women"] {
+  /* These will be hidden if they're in the secondary row */
+}

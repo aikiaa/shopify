@@ -1,0 +1,191 @@
+{% assign menu = linklists[section.settings.category_menu] %}
+
+{% if menu.links.size > 0 %}
+<div class="mega-menu" data-menu="new">
+  <div class="mega-menu__container">
+
+    {% for link in menu.links %}
+      <div class="mega-col">
+        <h4 class="mega-col__title">{{ link.title }}</h4>
+
+        {% if link.links.size > 0 %}
+          <ul class="mega-col__list">
+            {% for child in link.links %}
+              <li>
+                <a href="{{ child.url }}">{{ child.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    {% endfor %}
+
+    {% if section.settings.promo_image != blank %}
+      <div class="mega-col mega-col--promo">
+        <a href="{{ section.settings.promo_link }}">
+          <img
+            src="{{ section.settings.promo_image | image_url: width: 400 }}"
+            width="{{ section.settings.promo_image.width }}"
+            height="{{ section.settings.promo_image.height }}"
+            alt="Shop Now"
+            loading="lazy"
+          >
+          <span class="promo-label">Shop Now</span>
+        </a>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endif %}
+
+<style>
+.mega-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.25s ease;
+  z-index: 999;
+}
+
+.mega-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Hover buffer */
+.mega-menu::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+}
+
+/* Grid */
+.mega-menu__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 48px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+/* Columns */
+.mega-col__title {
+  color: #e11c2a;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.mega-col__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mega-col__list li {
+  margin-bottom: 8px;
+}
+
+.mega-col__list a {
+  font-size: 13.5px;
+  color: #282c3f;
+  text-decoration: none;
+}
+
+.mega-col__list a:hover {
+  font-weight: 600;
+  color: #000;
+}
+
+/* Promo */
+.mega-col--promo img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.promo-label {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Mobile */
+@media (max-width: 990px) {
+  .mega-menu {
+    display: none;
+  }
+}
+  /* Global styles - remove underlines and reduce font size */
+  * {
+    text-decoration: none !important;
+  }
+  
+  header a, header button { font-size: 14px !important; text-decoration: none; }
+  nav a { font-size: 14px !important; text-decoration: none; }
+  
+  /* Hide the second row of menus */
+  .header__inline-menu + * { display: none !important; }
+  {% comment %} ul:has(li:contains('Shop')) { display: none !important; } {% endcomment %}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const megaMenu = document.querySelector('[data-menu="new"]');
+  const trigger = document.querySelector('.nav-link--new');
+
+  if (!megaMenu || !trigger) return;
+
+  let timer;
+
+  const openMenu = () => {
+    clearTimeout(timer);
+    megaMenu.classList.add('active');
+  };
+
+  const closeMenu = () => {
+    timer = setTimeout(() => {
+      megaMenu.classList.remove('active');
+    }, 220);
+  };
+
+  trigger.addEventListener('mouseenter', openMenu);
+  trigger.addEventListener('mouseleave', closeMenu);
+  megaMenu.addEventListener('mouseenter', openMenu);
+  megaMenu.addEventListener('mouseleave', closeMenu);
+});
+</script>
+{% schema %}
+{
+  "name": "Mega Menu - New",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "category_menu",
+      "label": "Mega Menu (Nested)"
+    },
+    {
+      "type": "image_picker",
+      "id": "promo_image",
+      "label": "Right Promo Image"
+    },
+    {
+      "type": "url",
+      "id": "promo_link",
+      "label": "Promo Image Link"
+    }
+  ]
+}
+{% endschema %}

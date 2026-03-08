@@ -1,0 +1,48 @@
+{% if section.settings.menu != blank %}
+<ul class="header__menu" role="list">
+  {% for link in section.settings.menu.links %}
+    <li class="header__menu-item has-mega">
+      <a
+        href="{{ link.url }}"
+        class="header__menu-link"
+        {% if link.links.size > 0 %}aria-haspopup="true"{% endif %}
+      >
+        {{ link.title }}
+        {% if link.links.size > 0 %}
+          <span class="menu-caret">▾</span>
+        {% endif %}
+      </a>
+
+      {% if link.links.size > 0 %}
+      <div class="mega-menu">
+        <div class="mega-menu__content page-width">
+          <div class="mega-menu__grid">
+
+            {% for childlink in link.links %}
+              <div class="mega-menu__column">
+                <a href="{{ childlink.url }}" class="mega-menu__heading">
+                  {{ childlink.title }}
+                </a>
+
+                {% if childlink.links.size > 0 %}
+                <ul class="mega-menu__list">
+                  {% for grandchild in childlink.links %}
+                  <li>
+                    <a href="{{ grandchild.url }}">
+                      {{ grandchild.title }}
+                    </a>
+                  </li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+              </div>
+            {% endfor %}
+
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+{% endif %}

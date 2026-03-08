@@ -1,0 +1,569 @@
+{% doc %}
+  @prompt
+    Create a custom section that can be added to a specific page. The section should be flexible and customizable with settings for heading, description text, background color, text color, padding, and alignment. Include options to add images or content blocks that can be arranged in different layouts.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-custom-section-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.background_color }};
+    padding-top: {{ block.settings.padding_top }}px;
+    padding-bottom: {{ block.settings.padding_bottom }}px;
+    padding-left: {{ block.settings.padding_horizontal }}px;
+    padding-right: {{ block.settings.padding_horizontal }}px;
+  }
+
+  .ai-custom-section__container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.container_width }}px;
+    margin: 0 auto;
+    text-align: {{ block.settings.text_alignment }};
+  }
+
+  .ai-custom-section__heading-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.heading_size }}px;
+    margin: 0 0 {{ block.settings.heading_spacing }}px;
+    font-weight: 600;
+  }
+
+  .ai-custom-section__description-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.description_size }}px;
+    margin: 0 0 {{ block.settings.description_spacing }}px;
+    line-height: 1.6;
+  }
+
+  .ai-custom-section__content-{{ ai_gen_id }} {
+    display: grid;
+    gap: {{ block.settings.content_gap }}px;
+    margin-top: {{ block.settings.content_spacing }}px;
+  }
+
+  .ai-custom-section__content-{{ ai_gen_id }}--grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ai-custom-section__content-{{ ai_gen_id }}--grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .ai-custom-section__content-{{ ai_gen_id }}--grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .ai-custom-section__content-{{ ai_gen_id }}--single {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-custom-section__content-item-{{ ai_gen_id }} {
+    position: relative;
+  }
+
+  .ai-custom-section__image-wrapper-{{ ai_gen_id }} {
+    width: 100%;
+    margin-bottom: {{ block.settings.image_spacing }}px;
+    border-radius: {{ block.settings.image_border_radius }}px;
+    overflow: hidden;
+  }
+
+  .ai-custom-section__image-{{ ai_gen_id }} {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .ai-custom-section__image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-custom-section__image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 200px;
+    max-height: 200px;
+  }
+
+  .ai-custom-section__item-heading-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.item_heading_size }}px;
+    margin: 0 0 8px;
+    font-weight: 600;
+  }
+
+  .ai-custom-section__item-text-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.item_text_size }}px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-custom-section__content-{{ ai_gen_id }}--grid-3,
+    .ai-custom-section__content-{{ ai_gen_id }}--grid-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-custom-section-{{ ai_gen_id }} {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .ai-custom-section__content-{{ ai_gen_id }}--grid-2,
+    .ai-custom-section__content-{{ ai_gen_id }}--grid-3,
+    .ai-custom-section__content-{{ ai_gen_id }}--grid-4 {
+      grid-template-columns: 1fr;
+    }
+
+    .ai-custom-section__heading-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.heading_size }}px * 0.8);
+    }
+
+    .ai-custom-section__description-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.description_size }}px * 0.9);
+    }
+  }
+{% endstyle %}
+
+<div class="ai-custom-section-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-custom-section__container-{{ ai_gen_id }}">
+    {% if block.settings.heading != blank %}
+      <h2 class="ai-custom-section__heading-{{ ai_gen_id }}">
+        {{ block.settings.heading }}
+      </h2>
+    {% endif %}
+
+    {% if block.settings.description != blank %}
+      <div class="ai-custom-section__description-{{ ai_gen_id }}">
+        {{ block.settings.description }}
+      </div>
+    {% endif %}
+
+    {% if block.settings.show_content %}
+      <div class="ai-custom-section__content-{{ ai_gen_id }} ai-custom-section__content-{{ ai_gen_id }}--{{ block.settings.layout }}">
+        {% for i in (1..4) %}
+          {% liquid
+            assign image_key = 'content_image_' | append: i
+            assign heading_key = 'content_heading_' | append: i
+            assign text_key = 'content_text_' | append: i
+            assign show_key = 'show_content_' | append: i
+
+            assign show_item = block.settings[show_key]
+            assign item_image = block.settings[image_key]
+            assign item_heading = block.settings[heading_key]
+            assign item_text = block.settings[text_key]
+          %}
+
+          {% if show_item %}
+            <div class="ai-custom-section__content-item-{{ ai_gen_id }}">
+              {% if item_image != blank or block.settings.show_placeholder_images %}
+                <div class="ai-custom-section__image-wrapper-{{ ai_gen_id }}">
+                  {% if item_image != blank %}
+                    <img
+                      src="{{ item_image | image_url: width: 800 }}"
+                      alt="{{ item_image.alt | escape }}"
+                      loading="lazy"
+                      width="{{ item_image.width }}"
+                      height="{{ item_image.height }}"
+                      class="ai-custom-section__image-{{ ai_gen_id }}"
+                    >
+                  {% else %}
+                    <div class="ai-custom-section__image-placeholder-{{ ai_gen_id }}">
+                      {{ 'image' | placeholder_svg_tag }}
+                    </div>
+                  {% endif %}
+                </div>
+              {% endif %}
+
+              {% if item_heading != blank %}
+                <h3 class="ai-custom-section__item-heading-{{ ai_gen_id }}">
+                  {{ item_heading }}
+                </h3>
+              {% endif %}
+
+              {% if item_text != blank %}
+                <div class="ai-custom-section__item-text-{{ ai_gen_id }}">
+                  {{ item_text }}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom content section",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Custom section"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Add your custom content and configure the layout to match your needs.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Content layout",
+      "options": [
+        {
+          "value": "single",
+          "label": "Single column"
+        },
+        {
+          "value": "grid-2",
+          "label": "2 columns"
+        },
+        {
+          "value": "grid-3",
+          "label": "3 columns"
+        },
+        {
+          "value": "grid-4",
+          "label": "4 columns"
+        }
+      ],
+      "default": "grid-3"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "min": 600,
+      "max": 1400,
+      "step": 100,
+      "unit": "px",
+      "label": "Container width",
+      "default": 1200
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#121212"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Horizontal padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "heading_spacing",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Heading bottom spacing",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "description_spacing",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Description bottom spacing",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "content_spacing",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Content top spacing",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "min": 8,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Gap between items",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "item_heading_size",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Item heading size",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "item_text_size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Item text size",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Content blocks"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_content",
+      "label": "Show content blocks",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_placeholder_images",
+      "label": "Show placeholder images",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "image_spacing",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Image bottom spacing",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Image border radius",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Content block 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_content_1",
+      "label": "Show block 1",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "content_image_1",
+      "label": "Image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "content_heading_1",
+      "label": "Heading",
+      "default": "Feature 1"
+    },
+    {
+      "type": "richtext",
+      "id": "content_text_1",
+      "label": "Text",
+      "default": "<p>Describe your feature or benefit here.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Content block 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_content_2",
+      "label": "Show block 2",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "content_image_2",
+      "label": "Image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "content_heading_2",
+      "label": "Heading",
+      "default": "Feature 2"
+    },
+    {
+      "type": "richtext",
+      "id": "content_text_2",
+      "label": "Text",
+      "default": "<p>Describe your feature or benefit here.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Content block 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_content_3",
+      "label": "Show block 3",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "content_image_3",
+      "label": "Image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "content_heading_3",
+      "label": "Heading",
+      "default": "Feature 3"
+    },
+    {
+      "type": "richtext",
+      "id": "content_text_3",
+      "label": "Text",
+      "default": "<p>Describe your feature or benefit here.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Content block 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_content_4",
+      "label": "Show block 4",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "content_image_4",
+      "label": "Image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "content_heading_4",
+      "label": "Heading",
+      "default": "Feature 4"
+    },
+    {
+      "type": "richtext",
+      "id": "content_text_4",
+      "label": "Text",
+      "default": "<p>Describe your feature or benefit here.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom content section"
+    }
+  ]
+}
+{% endschema %}
