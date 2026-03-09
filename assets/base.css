@@ -3871,52 +3871,14 @@ details-disclosure > details {
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   font-size: 14px;
 }
-/* Buckeye animated announcement bar */
+/* Refined announcement bar */
 .utility-bar {
-  background: linear-gradient(
-    90deg,
-    #b11226 0%,     /* Buckeye red */
-    #ffffff 45%,   /* white center */
-    #ffffff 55%,   /* white center */
-    #b11226 100%   /* Buckeye red */
-  );
-
-  background-size: 300% 300%;
-  animation:
-    buckeye-flow 18s ease-in-out infinite,
-    white-drift 6s ease-in-out infinite;
-
+  background: #b11226;
   position: relative;
   overflow: hidden;
 }
-
-/* Smooth color flow */
-@keyframes buckeye-flow {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* Subtle horizontal "jump" for the white section */
-@keyframes white-drift {
-  0% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(6px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
 .announcement-bar__message {
-  color: #111;
+  color: #ffffff;
   font-weight: 500;
   letter-spacing: 0.2px;
 }
@@ -3951,10 +3913,10 @@ details-disclosure > details {
 
 .breadcrumbs {
   font-size: 1.2rem;
-  margin: 1rem auto;
-  padding-bottom: 2rem;
-  width: fit-content;
-  text-align: center;
+  margin: 1rem 0;
+  padding: 1rem 5rem 2rem;
+  width: 100%;
+  text-align: left;
 }
 
 .breadcrumbs a {
