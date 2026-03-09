@@ -39,8 +39,12 @@ const Wishlist = {
       const id = btn.dataset.productId;
       if (this.contains(id)) {
         btn.classList.add('active');
+        const span = btn.querySelector('span');
+        if (span && span.innerText === 'Wishlist') span.innerText = 'In Wishlist';
       } else {
         btn.classList.remove('active');
+        const span = btn.querySelector('span');
+        if (span && span.innerText === 'In Wishlist') span.innerText = 'Wishlist';
       }
     });
 

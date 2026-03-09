@@ -404,9 +404,9 @@ fill: black;
   <div class="header__utilities desktop-only">
     {% render 'header-search', input_id: 'Search-In-Header' %}
 
-    {% comment %} <a href="/pages/wishlist" class="header__icon">
-      {{ 'icon-heart.svg' | inline_asset_content }}
-    </a> {% endcomment %}
+    <a href="/pages/wishlist" class="header__icon header__icon--wishlist">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.72-8.72 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+    </a>
 
     {% if shop.customer_accounts_enabled %}
       <a href="{{ routes.account_url }}" class="header__icon">
@@ -453,9 +453,9 @@ fill: black;
   </a>
 {% endif %}
 
-    {% comment %} <a href="/pages/wishlist" class="header__icon">
-      {{ 'icon-heart.svg' | inline_asset_content }}
-    </a> {% endcomment %}
+    <a href="/pages/wishlist" class="header__icon header__icon--wishlist">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.72-8.72 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+    </a>
 
     {% if shop.customer_accounts_enabled %}
       <a href="{{ routes.account_url }}" class="header__icon">
