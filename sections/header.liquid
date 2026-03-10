@@ -386,18 +386,13 @@ fill: black;
     </a>
   </div>
 
-<!-- CENTER LOGO (HARDCODED) -->
+{% if settings.center_logo != blank %}
 <div class="header__logo header__logo--center desktop-only">
   <a href="{{ routes.root_url }}" class="header__logo-link" aria-label="Home">
-    <img
-      src="https://cdn.shopify.com/s/files/1/0970/6304/3391/files/unnamed_667fa57b-3bec-4adb-a00f-ad7fef922c5d_430x.png?v=1769053895#"
-      alt="Center Logo"
-      width="200"
-      height="80"
-      loading="eager"
-    >
+    {{ settings.center_logo | image_url: width: 400 | image_tag: class: 'header__logo-img', loading: 'eager' }}
   </a>
 </div>
+{% endif %}
 
 
   <!-- RIGHT UTILITIES -->
@@ -434,8 +429,13 @@ fill: black;
   {% render 'header-drawer' %}
 
     <a href="{{ routes.root_url }}" class="header__mobile-logo">
-          <img src="https://rangolimall.com/cdn/shop/files/WhatsApp_Image_2026-01-13_at_11.50.55_e84a1e80-536b-4f74-82f7-f87037351a27.jpg?v=1769062586&width=140" alt="Rangoli" width="32" height="32" style="max-height: 32px; width: auto;">
-
+      {%- if settings.mobile_inline_logo != blank -%}
+        {{ settings.mobile_inline_logo | image_url: width: 64 | image_tag: loading: 'eager' }}
+      {%- elsif settings.logo != blank -%}
+        {{ settings.logo | image_url: width: 64 | image_tag: loading: 'eager' }}
+      {%- else -%}
+        <span class="h4">{{ shop.name }}</span>
+      {%- endif -%}
     </a>
 </div>
 

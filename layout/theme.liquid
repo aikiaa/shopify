@@ -426,66 +426,66 @@ window.onTryOnBuynowCallback = function(data) {
     {%- endif -%}
     <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Find all product cards in the product collection grid
-    const productCards = document.querySelectorAll('[class*="card-wrapper"], a[href*="/products/"]');
-    
-    productCards.forEach(card => {
-      // Find the image element in the card
-      const imageElement = card.querySelector('img');
-      if (!imageElement) return;
-      
-      // Get the product link to determine if it has a video
-      const productLink = card.querySelector('a[href*="/products/"]');
-      if (!productLink) return;
-      
-      // Get product URL
-      const productUrl = productLink.getAttribute('href');
-      
-      // Fetch product data to check for videos
-      fetch(productUrl + '.json')
-        .then(response => response.json())
-        .then(data => {
-          const product = data.product;
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const handleIntersect = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const card = entry.target;
+          if (card.dataset.videoLoaded) return;
+          card.dataset.videoLoaded = 'true';
+
+          const imageElement = card.querySelector('img');
+          const productLink = card.querySelector('a[href*="/products/"]');
+          if (!imageElement || !productLink) return;
+
+          const productUrl = productLink.getAttribute('href').split('?')[0];
           
-          // Check if product has media with videos
-          if (product.media && product.media.length > 0) {
-            // Find the first video in the product media
-            const videoMedia = product.media.find(media => media.media_type === 'video');
-            
-            if (videoMedia && videoMedia.sources && videoMedia.sources.length > 0) {
-              // Create a video element
-              const video = document.createElement('video');
-              
-              // Set video attributes
-              video.autoplay = true;
-              video.muted = true;
-              video.loop = true;
-              video.style.width = '100%';
-              video.style.height = 'auto';
-              video.style.objectFit = 'cover';
-              
-              // Add video source
-              const source = document.createElement('source');
-// Find the first MP4 source
-              const mp4Source = videoMedia.sources.find(src => src.url && src.url.toLowerCase().includes('.mp4'));
-              source.src = mp4Source ? mp4Source.url : videoMedia.sources[0].url;
-              source.type = 'video/mp4';
-              video.appendChild(source);
-              
-              // Set poster from preview image
-              if (videoMedia.preview_image) {
-                video.poster = videoMedia.preview_image.src;
+          fetch(productUrl + '.json')
+            .then(response => response.json())
+            .then(data => {
+              const product = data.product;
+              if (product.media && product.media.length > 0) {
+                const videoMedia = product.media.find(media => media.media_type === 'video');
+                if (videoMedia && videoMedia.sources && videoMedia.sources.length > 0) {
+                  const video = document.createElement('video');
+                  video.autoplay = true;
+                  video.muted = true;
+                  video.loop = true;
+                  video.playsinline = true;
+                  video.style.width = '100%';
+                  video.style.height = 'auto';
+                  video.style.objectFit = 'cover';
+
+                  const mp4Source = videoMedia.sources.find(src => src.url && src.url.toLowerCase().includes('.mp4'));
+                  const source = document.createElement('source');
+                  source.src = mp4Source ? mp4Source.url : videoMedia.sources[0].url;
+                  source.type = 'video/mp4';
+                  video.appendChild(source);
+
+                  if (videoMedia.preview_image) {
+                    video.poster = videoMedia.preview_image.src;
+                  }
+
+                  imageElement.parentElement.replaceChild(video, imageElement);
+                }
               }
-              
-              // Replace image with video
-              imageElement.parentElement.replaceChild(video, imageElement);
-            }
-          }
-        })
-        .catch(error => console.log('Error loading product data:', error));
-    });
+            })
+            .catch(error => console.log('Error loading product data:', error));
+
+          observer.unobserve(card);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersect, observerOptions);
+    const productCards = document.querySelectorAll('[class*="card-wrapper"]');
+    productCards.forEach(card => observer.observe(card));
   });
-  setInterval(function() { document.querySelectorAll('[class*="card-wrapper"], a[href*="/products/"]').forEach(card => { const imageElement = card.querySelector('img'); if (!imageElement) return; const productLink = card.querySelector('a[href*="/products/"]'); if (!productLink) return; const productUrl = productLink.getAttribute('href'); fetch(productUrl + '.json').then(response => response.json()).then(data => { const product = data.product; if (product.media && product.media.length > 0) { const videoMedia = product.media.find(media => media.media_type === 'video'); if (videoMedia && videoMedia.sources && videoMedia.sources.length > 0) { const mp4Source = videoMedia.sources.find(src => src.url && src.url.toLowerCase().includes('.mp4')); if (mp4Source || videoMedia.sources[0]) { const video = document.createElement('video'); video.autoplay = true; video.muted = true; video.loop = true; video.style.width = '100%'; video.style.height = 'auto'; video.style.objectFit = 'cover'; const source = document.createElement('source'); source.src = mp4Source ? mp4Source.url : videoMedia.sources[0].url; source.type = 'video/mp4'; video.appendChild(source); if (videoMedia.preview_image) { video.poster = videoMedia.preview_image.src; } imageElement.parentElement.replaceChild(video, imageElement); } } }}).catch(error => console.log('Error loading product data:', error)); }); }, 2000);
 </script>
 
 <script>
