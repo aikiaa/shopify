@@ -1,1 +1,279 @@
-{"sections":{"main":{"type":"main-product","blocks":{"vendor":{"type":"text","settings":{"text":"{{ product.vendor }}","text_style":"uppercase"}},"title":{"type":"title","settings":{}},"sku_damdTK":{"type":"sku","settings":{"text_style":"uppercase"}},"price":{"type":"price","settings":{}},"variant_picker":{"type":"variant_picker","settings":{"picker_type":"button","swatch_shape":"circle"}},"quantity_selector":{"type":"quantity_selector","settings":{}},"camweara_virtual_try_on_tryon_button_gN9xyg":{"type":"shopify:\/\/apps\/camweara-virtual-try-on\/blocks\/tryon-button\/d7a6e0b0-c347-463d-b379-f9d893f69898","settings":{"tryon_id":"sku","enable_buynow":true,"enable_recommendation":false,"target_container_class":"camweara-tryon-button","dropdown_option":"cart","button_text":"Virtual Try On","font_size":"medium","font_weight":"400","letter_spacing":0,"button_icon":"camera","button_color":"#fefcfc","button_text_color":"#5e3a99","width":100,"border":1,"border_radius":0,"padding-x":0,"padding-y":10,"margin-x":0,"margin-y":10,"left":0,"top":0,"cache_num":"null"}},"buy_buttons":{"type":"buy_buttons","settings":{"show_dynamic_checkout":true,"show_gift_card_recipient":false}},"custom_liquid_8iUDEc":{"type":"custom_liquid","settings":{"custom_liquid":"{% assign tags_string = product.tags | join: '|' | downcase %}\n\n<style>\n\/* BUTTON *\/\n.size-chart-btn {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  background: none;\n  border: none;\n  cursor: pointer;\n  font-size: 14px;\n  padding: 0;\n}\n\n.size-chart-btn span {\n  color: #e00000;\n  font-weight: 500;\n}\n.size-chart-btn span {\n  color: black;\n  text-decoration: none;\n}\n.size-chart-btn{\ntext-decoration: none;\n}\n\n\/* MODAL OVERLAY *\/\n.size-chart-modal {\n  position: fixed;\n  inset: 0;\n  background: rgba(0,0,0,0.45);\n  display: none;\n  z-index: 9999;\n}\n\n.size-chart-modal.active {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n\/* MODAL CONTENT *\/\n.size-chart-modal-content {\n  background: #fff;\n  width: 92%;\n  max-width: 520px;\n  max-height: 85vh;        \/* 👈 critical *\/\n  border-radius: 8px;\n  position: relative;\n  overflow-y: auto;        \/* 👈 critical *\/\n  padding: 20px 16px 24px;\n  box-sizing: border-box;\n}\n\n.size-chart-close {\n  position: sticky;\n  top: 0;\n  margin-left: auto;\n  display: block;\n  font-size: 24px;\n  background: none;\n  border: none;\n  cursor: pointer;\n  line-height: 1;\n}\n\n\/* TABLE *\/\n.size-chart-table {\n  width: 100%;\n  border-collapse: collapse;\n  margin-top: 12px;\n  font-size: 14px;\n}\n\n.size-chart-table th,\n.size-chart-table td {\n  padding: 8px;\n  border-bottom: 1px solid #eee;\n  text-align: center;\n}\n\n.size-chart-table th {\n  font-weight: 600;\n  background: #fafafa;\n}\n<\/style>\n\n<!-- BUTTON -->\n<button class=\"size-chart-btn\" type=\"button\" onclick=\"openSizeChart()\">\n  <svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" viewBox=\"0 0 24 24\" width=\"5\" height=\"5\">\n    <path d=\"M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z\"\/>\n  <\/svg>\n  <span>Size Chart<\/span>\n<\/button>\n\n<!-- MODAL -->\n<div id=\"sizeChartModal\" class=\"size-chart-modal\" onclick=\"overlayClose(event)\">\n  <div class=\"size-chart-modal-content\">\n    <button class=\"size-chart-close\" type=\"button\" onclick=\"closeSizeChart()\">&times;<\/button>\n\n    <h2 style=\"margin: 0 0 8px;\">Size Chart<\/h2>\n\n    <table class=\"size-chart-table\">\n      <thead>\n        <tr>\n          <th>Size<\/th>\n          <th>Chest (in)<\/th>\n          <th>Waist (in)<\/th>\n          <th>Length (in)<\/th>\n        <\/tr>\n      <\/thead>\n\n      <tbody>\n        {% if tags_string contains 'footwear' and tags_string contains 'female' %}\n          <tr><td colspan=\"4\"><strong>Girls Footwear<\/strong><\/td><\/tr>\n          {% for size in (5..11) %}\n            <tr>\n              <td>{{ size }}<\/td>\n              <td colspan=\"3\">Standard Fit<\/td>\n            <\/tr>\n          {% endfor %}\n\n        {% elsif tags_string contains 'footwear' and tags_string contains 'male' %}\n          <tr><td colspan=\"4\"><strong>Boys Footwear<\/strong><\/td><\/tr>\n          {% for size in (6..12) %}\n            <tr>\n              <td>{{ size }}<\/td>\n              <td colspan=\"3\">Standard Fit<\/td>\n            <\/tr>\n          {% endfor %}\n\n        {% elsif tags_string contains 'female' %}\n          <tr><td>XS<\/td><td>32–33<\/td><td>24–25<\/td><td>26<\/td><\/tr>\n          <tr><td>S<\/td><td>34–35<\/td><td>26–27<\/td><td>26.5<\/td><\/tr>\n          <tr><td>M<\/td><td>36–37<\/td><td>28–29<\/td><td>27<\/td><\/tr>\n          <tr><td>L<\/td><td>38–39<\/td><td>30–31<\/td><td>27.5<\/td><\/tr>\n          <tr><td>XL<\/td><td>40–41<\/td><td>32–33<\/td><td>28<\/td><\/tr>\n\n        {% else %}\n          <tr><td>S<\/td><td>36–38<\/td><td>28–30<\/td><td>27<\/td><\/tr>\n          <tr><td>M<\/td><td>39–40<\/td><td>31–32<\/td><td>28<\/td><\/tr>\n          <tr><td>L<\/td><td>41–42<\/td><td>33–34<\/td><td>29<\/td><\/tr>\n          <tr><td>XL<\/td><td>43–44<\/td><td>35–36<\/td><td>30<\/td><\/tr>\n          <tr><td>XXL<\/td><td>45–46<\/td><td>37–38<\/td><td>31<\/td><\/tr>\n        {% endif %}\n      <\/tbody>\n    <\/table>\n  <\/div>\n<\/div>\n\n<script>\nfunction openSizeChart() {\n  document.getElementById('sizeChartModal').classList.add('active');\n}\n\nfunction closeSizeChart() {\n  document.getElementById('sizeChartModal').classList.remove('active');\n}\n\nfunction overlayClose(e) {\n  if (e.target.id === 'sizeChartModal') {\n    closeSizeChart();\n  }\n}\n<\/script>"}},"share":{"type":"share","settings":{"share_label":"Share"}},"custom_liquid_gdkQ8N":{"type":"custom_liquid","settings":{"custom_liquid":"<style>\n  .camweara-tryon-button {\n    max-width: 200px !important;\n  }\n  \n  .camweara-tryon-button button {\n    max-width: 100% !important;\n    width: 100% !important;\n  }\n<\/style>"}},"camweara_virtual_try_on_tryon_button_6bhjQU":{"type":"shopify:\/\/apps\/camweara-virtual-try-on\/blocks\/tryon-button\/d7a6e0b0-c347-463d-b379-f9d893f69898","settings":{"tryon_id":"title","enable_buynow":true,"enable_recommendation":false,"target_container_class":"Enter class name","dropdown_option":"cart","button_text":"Virtual Try On","font_size":"medium","font_weight":"400","letter_spacing":0,"button_icon":"camera","button_color":"#784dd0","button_text_color":"#ffffff","width":73,"border":1,"border_radius":0,"padding-x":0,"padding-y":10,"margin-x":0,"margin-y":10,"left":0,"top":0,"cache_num":"null"}},"description":{"type":"description","settings":{}},"custom_liquid_JK8kyk":{"type":"custom_liquid","settings":{"custom_liquid":"<div class=\"product__accordion accordion quick-add-hidden\">\n  <details id=\"Details-specs-{{ section.id }}\">\n    <summary>\n      <div class=\"summary__title\">\n        {% render 'icon-accordion', icon: 'clipboard' %}\n        <h2 class=\"h4 accordion__title inline-richtext\">Material & Specifications<\/h2>\n      <\/div>\n      {{- 'icon-caret.svg' | inline_asset_content -}}\n    <\/summary>\n    <div class=\"accordion__content rte\">\n      <style>\n      .product-specs-table {\n        width: 100%;\n        border-collapse: collapse;\n        font-size: 14px;\n      }\n      .product-specs-table td {\n        padding: 10px 0;\n        vertical-align: top;\n      }\n      .product-specs-table tr + tr td {\n        border-top: 1px solid #eee;\n      }\n      .spec-label {\n        color: #000;\n        font-weight: 500;\n        width: 45%;\n      }\n      .spec-value {\n        color: #777;\n      }\n      <\/style>\n      <table class=\"product-specs-table\">\n        {% if product.tags.size > 0 %}\n        <tr>\n          <td class=\"spec-label\">Category & Style<\/td>\n          <td class=\"spec-value\">{{ product.tags | join: \", \" }}<\/td>\n        <\/tr>\n        {% endif %}\n        {% assign m = product.metafields.shopify %}\n        {% if m.footwear_material %}\n        <tr>\n          <td class=\"spec-label\">Material<\/td>\n          <td class=\"spec-value\">{{ m.footwear_material.value }}<\/td>\n        <\/tr>\n        {% endif %}\n        {% if m.closure_type %}\n        <tr>\n          <td class=\"spec-label\">Closure Type<\/td>\n          <td class=\"spec-value\">{{ m.closure_type.value }}<\/td>\n        <\/tr>\n        {% endif %}\n        {% if m.heel_height_type %}\n        <tr>\n          <td class=\"spec-label\">Heel Height<\/td>\n          <td class=\"spec-value\">{{ m.heel_height_type.value }}<\/td>\n        <\/tr>\n        {% endif %}\n        {% if m.occasion_style %}\n        <tr>\n          <td class=\"spec-label\">Occasion<\/td>\n          <td class=\"spec-value\">{{ m.occasion_style.value }}<\/td>\n        <\/tr>\n        {% endif %}\n        {% if m.sandal_style %}\n        <tr>\n          <td class=\"spec-label\">Sandal Style<\/td>\n          <td class=\"spec-value\">{{ m.sandal_style.value }}<\/td>\n        <\/tr>\n        {% endif %}\n        {% if m.shoe_features %}\n        <tr>\n          <td class=\"spec-label\">Features<\/td>\n          <td class=\"spec-value\">{{ m.shoe_features.value }}<\/td>\n        <\/tr>\n        {% endif %}\n        {% if m.target_gender %}\n        <tr>\n          <td class=\"spec-label\">Target Gender<\/td>\n          <td class=\"spec-value\">{{ m.target_gender.value }}<\/td>\n        <\/tr>\n        {% endif %}\n        {% if m.toe_style %}\n        <tr>\n          <td class=\"spec-label\">Toe Style<\/td>\n          <td class=\"spec-value\">{{ m.toe_style.value }}<\/td>\n        <\/tr>\n        {% endif %}\n        <tr>\n          <td class=\"spec-label\">Availability<\/td>\n          <td class=\"spec-value\">\n            {% if product.available %}In Stock{% else %}Out of Stock{% endif %}\n          <\/td>\n        <\/tr>\n      <\/table>\n    <\/div>\n  <\/details>\n<\/div>"}},"judge_me_reviews_preview_badge_YfXbpX":{"type":"shopify:\/\/apps\/judge-me-reviews\/blocks\/preview_badge\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8","settings":{}}},"block_order":["vendor","title","sku_damdTK","price","variant_picker","quantity_selector","camweara_virtual_try_on_tryon_button_gN9xyg","buy_buttons","custom_liquid_8iUDEc","share","custom_liquid_gdkQ8N","camweara_virtual_try_on_tryon_button_6bhjQU","description","custom_liquid_JK8kyk","judge_me_reviews_preview_badge_YfXbpX"],"settings":{"enable_sticky_info":true,"color_scheme":"scheme-1","media_size":"small","constrain_to_viewport":true,"media_fit":"contain","gallery_layout":"thumbnail_slider","mobile_thumbnails":"hide","media_position":"left","image_zoom":"hover","hide_variants":true,"enable_video_looping":true,"padding_top":36,"padding_bottom":12}},"related-products":{"type":"related-products","settings":{"heading":"You may also like","heading_size":"h2","products_to_show":4,"columns_desktop":4,"columns_mobile":"2","color_scheme":"scheme-1","image_ratio":"square","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"padding_top":36,"padding_bottom":28}},"reviews_section":{"type":"apps","blocks":{"judge_me_reviews_review_widget_Mkwtbe":{"type":"shopify:\/\/apps\/judge-me-reviews\/blocks\/review_widget\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8","settings":{"review_data":"sample_data","max_width":1200,"show_shop_reviews":false,"empty_state":"empty_widget"}}},"block_order":["judge_me_reviews_review_widget_Mkwtbe"],"settings":{"include_margins":true}},"176838789906b543ce":{"type":"apps","blocks":{"judge_me_reviews_cards_carousel_8YdWKN":{"type":"shopify:\/\/apps\/judge-me-reviews\/blocks\/cards_carousel\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8","disabled":true,"settings":{"show_sample_reviews":true,"reviews_selection":"all","products":[],"star_rating":"all","show_review_media":true,"display_order":"media_first","no_image_fallback":"review_text_only","max_reviews":20,"review_length":"medium","text_size":"medium","image_ratio":"1","reviews_shown":4,"show_reviewer_name":true,"show_product_name":true,"hide_arrows_mobile":true,"arrows_position":"sides","max_width":1100,"corner_styling":"soft","header_text_color":"#000000","text_color":"#000000","card_color":"#f9f9f9","stars_color":"","arrows_color":"#000000","transition_speed":5,"header_text":"Customers are saying","show_average_rating":true}}},"block_order":["judge_me_reviews_cards_carousel_8YdWKN"],"settings":{"include_margins":true}},"1768483919881a7cee":{"type":"apps","settings":{"include_margins":true}},"176901407453b9ea87":{"type":"apps","blocks":{"vizup_videos_videos_block_mgCexJ":{"type":"shopify:\/\/apps\/vizup-videos\/blocks\/videos-block\/eaecaa7b-ab6b-40ae-8ddf-50daa867f3eb","settings":{"videoc_widget_id":"","custom_css":""}}},"block_order":["vizup_videos_videos_block_mgCexJ"],"settings":{"include_margins":true}}},"order":["main","related-products","reviews_section","176838789906b543ce","1768483919881a7cee","176901407453b9ea87"]}
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "sku_damdTK": {
+          "type": "sku",
+          "settings": {
+            "text_style": "uppercase"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "camweara_virtual_try_on_tryon_button_gN9xyg": {
+          "type": "shopify://apps/camweara-virtual-try-on/blocks/tryon-button/d7a6e0b0-c347-463d-b379-f9d893f69898",
+          "settings": {
+            "tryon_id": "sku",
+            "enable_buynow": true,
+            "enable_recommendation": false,
+            "target_container_class": "camweara-tryon-button",
+            "dropdown_option": "cart",
+            "button_text": "Virtual Try On",
+            "font_size": "medium",
+            "font_weight": "400",
+            "letter_spacing": 0,
+            "button_icon": "camera",
+            "button_color": "#fefcfc",
+            "button_text_color": "#5e3a99",
+            "width": 100,
+            "border": 1,
+            "border_radius": 0,
+            "padding-x": 0,
+            "padding-y": 10,
+            "margin-x": 0,
+            "margin-y": 10,
+            "left": 0,
+            "top": 0,
+            "cache_num": "null"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": false
+          }
+        },
+        "custom_liquid_8iUDEc": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% assign tags_string = product.tags | join: '|' | downcase %}\n\n<style>\n/* BUTTON */\n.size-chart-btn {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  background: none;\n  border: none;\n  cursor: pointer;\n  font-size: 14px;\n  padding: 0;\n}\n\n.size-chart-btn span {\n  color: #e00000;\n  font-weight: 500;\n}\n.size-chart-btn span {\n  color: black;\n  text-decoration: none;\n}\n.size-chart-btn{\ntext-decoration: none;\n}\n\n/* MODAL OVERLAY */\n.size-chart-modal {\n  position: fixed;\n  inset: 0;\n  background: rgba(0,0,0,0.45);\n  display: none;\n  z-index: 9999;\n}\n\n.size-chart-modal.active {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n/* MODAL CONTENT */\n.size-chart-modal-content {\n  background: #fff;\n  width: 92%;\n  max-width: 520px;\n  max-height: 85vh;        /* \ud83d\udc48 critical */\n  border-radius: 8px;\n  position: relative;\n  overflow-y: auto;        /* \ud83d\udc48 critical */\n  padding: 20px 16px 24px;\n  box-sizing: border-box;\n}\n\n.size-chart-close {\n  position: sticky;\n  top: 0;\n  margin-left: auto;\n  display: block;\n  font-size: 24px;\n  background: none;\n  border: none;\n  cursor: pointer;\n  line-height: 1;\n}\n\n/* TABLE */\n.size-chart-table {\n  width: 100%;\n  border-collapse: collapse;\n  margin-top: 12px;\n  font-size: 14px;\n}\n\n.size-chart-table th,\n.size-chart-table td {\n  padding: 8px;\n  border-bottom: 1px solid #eee;\n  text-align: center;\n}\n\n.size-chart-table th {\n  font-weight: 600;\n  background: #fafafa;\n}\n</style>\n\n<!-- BUTTON -->\n<button class=\"size-chart-btn\" type=\"button\" onclick=\"openSizeChart()\">\n  <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" width=\"5\" height=\"5\">\n    <path d=\"M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z\"/>\n  </svg>\n  <span>Size Chart</span>\n</button>\n\n<!-- MODAL -->\n<div id=\"sizeChartModal\" class=\"size-chart-modal\" onclick=\"overlayClose(event)\">\n  <div class=\"size-chart-modal-content\">\n    <button class=\"size-chart-close\" type=\"button\" onclick=\"closeSizeChart()\">&times;</button>\n\n    <h2 style=\"margin: 0 0 8px;\">Size Chart</h2>\n\n    <table class=\"size-chart-table\">\n      <thead>\n        <tr>\n          <th>Size</th>\n          <th>Chest (in)</th>\n          <th>Waist (in)</th>\n          <th>Length (in)</th>\n        </tr>\n      </thead>\n\n      <tbody>\n        {% if tags_string contains 'footwear' and tags_string contains 'female' %}\n          <tr><td colspan=\"4\"><strong>Girls Footwear</strong></td></tr>\n          {% for size in (5..11) %}\n            <tr>\n              <td>{{ size }}</td>\n              <td colspan=\"3\">Standard Fit</td>\n            </tr>\n          {% endfor %}\n\n        {% elsif tags_string contains 'footwear' and tags_string contains 'male' %}\n          <tr><td colspan=\"4\"><strong>Boys Footwear</strong></td></tr>\n          {% for size in (6..12) %}\n            <tr>\n              <td>{{ size }}</td>\n              <td colspan=\"3\">Standard Fit</td>\n            </tr>\n          {% endfor %}\n\n        {% elsif tags_string contains 'female' %}\n          <tr><td>XS</td><td>32\u201333</td><td>24\u201325</td><td>26</td></tr>\n          <tr><td>S</td><td>34\u201335</td><td>26\u201327</td><td>26.5</td></tr>\n          <tr><td>M</td><td>36\u201337</td><td>28\u201329</td><td>27</td></tr>\n          <tr><td>L</td><td>38\u201339</td><td>30\u201331</td><td>27.5</td></tr>\n          <tr><td>XL</td><td>40\u201341</td><td>32\u201333</td><td>28</td></tr>\n\n        {% else %}\n          <tr><td>S</td><td>36\u201338</td><td>28\u201330</td><td>27</td></tr>\n          <tr><td>M</td><td>39\u201340</td><td>31\u201332</td><td>28</td></tr>\n          <tr><td>L</td><td>41\u201342</td><td>33\u201334</td><td>29</td></tr>\n          <tr><td>XL</td><td>43\u201344</td><td>35\u201336</td><td>30</td></tr>\n          <tr><td>XXL</td><td>45\u201346</td><td>37\u201338</td><td>31</td></tr>\n        {% endif %}\n      </tbody>\n    </table>\n  </div>\n</div>\n\n<script>\nfunction openSizeChart() {\n  document.getElementById('sizeChartModal').classList.add('active');\n}\n\nfunction closeSizeChart() {\n  document.getElementById('sizeChartModal').classList.remove('active');\n}\n\nfunction overlayClose(e) {\n  if (e.target.id === 'sizeChartModal') {\n    closeSizeChart();\n  }\n}\n</script>"
+          }
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        },
+        "custom_liquid_gdkQ8N": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<style>\n  .camweara-tryon-button {\n    max-width: 200px !important;\n  }\n  \n  .camweara-tryon-button button {\n    max-width: 100% !important;\n    width: 100% !important;\n  }\n</style>"
+          }
+        },
+        "camweara_virtual_try_on_tryon_button_6bhjQU": {
+          "type": "shopify://apps/camweara-virtual-try-on/blocks/tryon-button/d7a6e0b0-c347-463d-b379-f9d893f69898",
+          "settings": {
+            "tryon_id": "title",
+            "enable_buynow": true,
+            "enable_recommendation": false,
+            "target_container_class": "Enter class name",
+            "dropdown_option": "cart",
+            "button_text": "Virtual Try On",
+            "font_size": "medium",
+            "font_weight": "400",
+            "letter_spacing": 0,
+            "button_icon": "camera",
+            "button_color": "#784dd0",
+            "button_text_color": "#ffffff",
+            "width": 73,
+            "border": 1,
+            "border_radius": 0,
+            "padding-x": 0,
+            "padding-y": 10,
+            "margin-x": 0,
+            "margin-y": 10,
+            "left": 0,
+            "top": 0,
+            "cache_num": "null"
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "custom_liquid_JK8kyk": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div class=\"product__accordion accordion quick-add-hidden\">\n  <details id=\"Details-specs-{{ section.id }}\">\n    <summary>\n      <div class=\"summary__title\">\n        \n        <h2 class=\"h4 accordion__title inline-richtext\">Material & Specifications</h2>\n      </div>\n      {{- 'icon-caret.svg' | inline_asset_content -}}\n    </summary>\n    <div class=\"accordion__content rte\">\n      <style>\n      .product-specs-table {\n        width: 100%;\n        border-collapse: collapse;\n        font-size: 14px;\n      }\n      .product-specs-table td {\n        padding: 10px 0;\n        vertical-align: top;\n      }\n      .product-specs-table tr + tr td {\n        border-top: 1px solid #eee;\n      }\n      .spec-label {\n        color: #000;\n        font-weight: 500;\n        width: 45%;\n      }\n      .spec-value {\n        color: #777;\n      }\n      </style>\n      <table class=\"product-specs-table\">\n        {% if product.tags.size > 0 %}\n        <tr>\n          <td class=\"spec-label\">Category & Style</td>\n          <td class=\"spec-value\">{{ product.tags | join: \", \" }}</td>\n        </tr>\n        {% endif %}\n        {% assign m = product.metafields.shopify %}\n        {% if m.footwear_material %}\n        <tr>\n          <td class=\"spec-label\">Material</td>\n          <td class=\"spec-value\">{{ m.footwear_material.value }}</td>\n        </tr>\n        {% endif %}\n        {% if m.closure_type %}\n        <tr>\n          <td class=\"spec-label\">Closure Type</td>\n          <td class=\"spec-value\">{{ m.closure_type.value }}</td>\n        </tr>\n        {% endif %}\n        {% if m.heel_height_type %}\n        <tr>\n          <td class=\"spec-label\">Heel Height</td>\n          <td class=\"spec-value\">{{ m.heel_height_type.value }}</td>\n        </tr>\n        {% endif %}\n        {% if m.occasion_style %}\n        <tr>\n          <td class=\"spec-label\">Occasion</td>\n          <td class=\"spec-value\">{{ m.occasion_style.value }}</td>\n        </tr>\n        {% endif %}\n        {% if m.sandal_style %}\n        <tr>\n          <td class=\"spec-label\">Sandal Style</td>\n          <td class=\"spec-value\">{{ m.sandal_style.value }}</td>\n        </tr>\n        {% endif %}\n        {% if m.shoe_features %}\n        <tr>\n          <td class=\"spec-label\">Features</td>\n          <td class=\"spec-value\">{{ m.shoe_features.value }}</td>\n        </tr>\n        {% endif %}\n        {% if m.target_gender %}\n        <tr>\n          <td class=\"spec-label\">Target Gender</td>\n          <td class=\"spec-value\">{{ m.target_gender.value }}</td>\n        </tr>\n        {% endif %}\n        {% if m.toe_style %}\n        <tr>\n          <td class=\"spec-label\">Toe Style</td>\n          <td class=\"spec-value\">{{ m.toe_style.value }}</td>\n        </tr>\n        {% endif %}\n        <tr>\n          <td class=\"spec-label\">Availability</td>\n          <td class=\"spec-value\">\n            {% if product.available %}In Stock{% else %}Out of Stock{% endif %}\n          </td>\n        </tr>\n      </table>\n    </div>\n  </details>\n</div>"
+          }
+        },
+        "judge_me_reviews_preview_badge_YfXbpX": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "sku_damdTK",
+        "price",
+        "variant_picker",
+        "quantity_selector",
+        "camweara_virtual_try_on_tryon_button_gN9xyg",
+        "buy_buttons",
+        "share",
+        "custom_liquid_8iUDEc",
+        "custom_liquid_gdkQ8N",
+        "camweara_virtual_try_on_tryon_button_6bhjQU",
+        "description",
+        "custom_liquid_JK8kyk",
+        "judge_me_reviews_preview_badge_YfXbpX"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "small",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail_slider",
+        "mobile_thumbnails": "hide",
+        "media_position": "left",
+        "image_zoom": "hover",
+        "hide_variants": true,
+        "enable_video_looping": true,
+        "padding_top": 36,
+        "padding_bottom": 12
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "You may also like",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+    "reviews_section": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_Mkwtbe": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_Mkwtbe"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "176838789906b543ce": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_cards_carousel_8YdWKN": {
+          "type": "shopify://apps/judge-me-reviews/blocks/cards_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "disabled": true,
+          "settings": {
+            "show_sample_reviews": true,
+            "reviews_selection": "all",
+            "products": [],
+            "star_rating": "all",
+            "show_review_media": true,
+            "display_order": "media_first",
+            "no_image_fallback": "review_text_only",
+            "max_reviews": 20,
+            "review_length": "medium",
+            "text_size": "medium",
+            "image_ratio": "1",
+            "reviews_shown": 4,
+            "show_reviewer_name": true,
+            "show_product_name": true,
+            "hide_arrows_mobile": true,
+            "arrows_position": "sides",
+            "max_width": 1100,
+            "corner_styling": "soft",
+            "header_text_color": "#000000",
+            "text_color": "#000000",
+            "card_color": "#f9f9f9",
+            "stars_color": "",
+            "arrows_color": "#000000",
+            "transition_speed": 5,
+            "header_text": "Customers are saying",
+            "show_average_rating": true
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_cards_carousel_8YdWKN"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "1768483919881a7cee": {
+      "type": "apps",
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "176901407453b9ea87": {
+      "type": "apps",
+      "blocks": {
+        "vizup_videos_videos_block_mgCexJ": {
+          "type": "shopify://apps/vizup-videos/blocks/videos-block/eaecaa7b-ab6b-40ae-8ddf-50daa867f3eb",
+          "settings": {
+            "videoc_widget_id": "",
+            "custom_css": ""
+          }
+        }
+      },
+      "block_order": [
+        "vizup_videos_videos_block_mgCexJ"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related-products",
+    "reviews_section",
+    "176838789906b543ce",
+    "1768483919881a7cee",
+    "176901407453b9ea87"
+  ]
+}

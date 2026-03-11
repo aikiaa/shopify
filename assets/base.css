@@ -3927,9 +3927,6 @@ details-disclosure > details {
 .breadcrumbs a:hover {
   text-decoration: underline;
 }
-.swym-is-safari {
-top: 3px;
-}
 @media screen and (min-width: 980px) {
 
 #camweara-tryon-button{
@@ -3944,146 +3941,20 @@ top: 3px;
   font-size: 0.95em;
 }
 
-/* SWYM WISHLIST STYLING */
-.card__media .swym-add-to-wishlist-view-product {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 5;
-  background: white;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  display: flex;
+
+/* Align Share and Size Chart horizontally */
+.product__info-container .share-button,
+.product__info-container .size-chart-btn {
+  display: inline-flex !important;
+  vertical-align: middle;
   align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  border: none;
-  cursor: pointer;
-  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.product__info-container .share-button {
+  margin-right: 1.5rem;
 }
 
-.card__media .swym-add-to-wishlist-view-product:after {
-  content: "";
-  display: block;
-  width: 20px;
-  height: 20px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.72-8.72 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'%3E%3C/path%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-}
-
-.card__media .swym-add-to-wishlist-view-product.swym-added:after {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='red' stroke='red' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.72-8.72 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'%3E%3C/path%3E%3C/svg%3E");
-}
-
-.product__info-container .swym-add-to-wishlist-view-product {
+.product__info-container .share-button details {
   display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #f4f4f4;
-  padding: 8px 15px;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
-  font-weight: 500;
-  color: black;
-}
-
-.product__info-container .swym-add-to-wishlist-view-product:before {
-  content: "";
-  display: block;
-  width: 20px;
-  height: 20px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.72-8.72 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'%3E%3C/path%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-}
-
-.product__info-container .swym-add-to-wishlist-view-product.swym-added:before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='red' stroke='red' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.72-8.72 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'%3E%3C/path%3E%3C/svg%3E");
-}
-
-/* CUSTOM WISHLIST STYLING */
-.wishlist-btn {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 5;
-  background: white;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition: transform 0.2s ease;
-}
-
-.wishlist-btn:hover {
-  transform: scale(1.1);
-}
-
-.wishlist-btn svg {
-  width: 20px;
-  height: 20px;
-  fill: none;
-  stroke: black;
-  stroke-width: 2;
-  transition: fill 0.2s ease, stroke 0.2s ease;
-}
-
-.wishlist-btn.active svg {
-  fill: red;
-  stroke: red;
-}
-
-.product__info-container .wishlist-btn-pdp {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #f4f4f4;
-  padding: 10px 20px;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
-  font-weight: 500;
-  color: black;
-  margin-bottom: 1rem;
-}
-
-.product__info-container .wishlist-btn-pdp svg {
-  width: 20px;
-  height: 20px;
-  fill: none;
-  stroke: black;
-  stroke-width: 2;
-}
-
-.product__info-container .wishlist-btn-pdp.active svg {
-  fill: red;
-  stroke: red;
-}
-
-#wishlist-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-}
-
-@media screen and (min-width: 750px) {
-  #wishlist-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-.wishlist-page-header {
-  padding: 4rem 0;
-  text-align: center;
 }
