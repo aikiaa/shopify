@@ -69,33 +69,6 @@
             "custom_liquid": "<style>\n  .camweara-tryon-button {\n    max-width: 200px !important;\n  }\n  \n  .camweara-tryon-button button {\n    max-width: 100% !important;\n    width: 100% !important;\n  }\n</style>"
           }
         },
-        "camweara_virtual_try_on_tryon_button_6bhjQU": {
-          "type": "shopify://apps/camweara-virtual-try-on/blocks/tryon-button/d7a6e0b0-c347-463d-b379-f9d893f69898",
-          "settings": {
-            "tryon_id": "title",
-            "enable_buynow": true,
-            "enable_recommendation": false,
-            "target_container_class": "Enter class name",
-            "dropdown_option": "cart",
-            "button_text": "Virtual Try On",
-            "font_size": "medium",
-            "font_weight": "400",
-            "letter_spacing": 0,
-            "button_icon": "camera",
-            "button_color": "#784dd0",
-            "button_text_color": "#ffffff",
-            "width": 73,
-            "border": 1,
-            "border_radius": 0,
-            "padding-x": 0,
-            "padding-y": 10,
-            "margin-x": 0,
-            "margin-y": 10,
-            "left": 0,
-            "top": 0,
-            "cache_num": "null"
-          }
-        },
         "description": {
           "type": "description",
           "settings": {}
@@ -122,7 +95,6 @@
         "share",
         "custom_liquid_8iUDEc",
         "custom_liquid_gdkQ8N",
-        "camweara_virtual_try_on_tryon_button_6bhjQU",
         "description",
         "custom_liquid_JK8kyk",
         "judge_me_reviews_preview_badge_YfXbpX"
