@@ -3760,34 +3760,10 @@ details-disclosure > details {
   display: block;
 }
 .product-extra-actions {
-  margin-top: 16px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.product-extra-actions .video-call-button {
-  background-color: #e11d48;
-  color: #ffffff;
-}
-
-.product-extra-actions .video-call-button:hover {
-  background-color: #be123c;
-}
-
-.product-extra-actions .whatsapp-button {
-  background-color: #25D366;
-  color: #ffffff;
-}
-
-.product-extra-actions .whatsapp-button:hover {
-  background-color: #1da851;
-}
-.product-extra-actions {
-  margin-top: 16px;
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 1.5rem;
 }
 
 /* Video Call Button */
@@ -3796,16 +3772,18 @@ details-disclosure > details {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background: #c96f00;
+  background: #b11226;
   color: #fff;
-  padding: 14px 16px;
-  border-radius: 6px;
+  padding: 12px 20px;
+  border-radius: 4px;
   font-weight: 600;
+  font-size: 14px;
   text-decoration: none;
+  transition: opacity 0.3s ease;
 }
 
 .video-call-shopping-btn:hover {
-  background: #411268ba;
+  opacity: 0.9;
 }
 
 /* WhatsApp Button */
@@ -3813,16 +3791,18 @@ details-disclosure > details {
   display: flex;
   align-items: center;
   gap: 14px;
-  background: #39b54a;
+  background: #25D366;
   color: #fff;
-  padding: 14px 16px;
-  border-radius: 6px;
+  padding: 12px 20px;
+  border-radius: 4px;
   justify-content: center;
   text-decoration: none;
+  font-size: 14px;
+  transition: opacity 0.3s ease;
 }
 
 .whatsapp-inquiry-btn:hover {
-  background: #2fa043;
+  opacity: 0.9;
 }
 
 .whatsapp-inquiry-btn .wa-icon svg {
@@ -3945,7 +3925,7 @@ details-disclosure > details {
 /* Align Share and Size Chart horizontally */
 .product__info-container .share-button,
 .product__info-container .size-chart-btn {
-  display: inline-flex !important;
+  display: inline-flex;
   vertical-align: middle;
   align-items: center;
   margin-top: 0;
@@ -3955,6 +3935,17 @@ details-disclosure > details {
   margin-right: 1.5rem;
 }
 
-.product__info-container .share-button details {
+.product__info-container .share-button details:not([hidden]) {
   display: inline-flex;
+}
+
+/* Product Info Redesign & Spacing */
+.product__info-container .product-form__input .form__label {
+  font-weight: 700;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12rem;
+  margin-bottom: 1.2rem;
+  color: #000;
+  display: block;
 }
